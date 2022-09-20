@@ -36,7 +36,7 @@ const errorInterceptors = (error: any) => {
         case 401:
         case 403:
             userService.removeCurrentUser();
-            location.href = "/login"
+            window.location.href = "/login"
             return Promise.reject(error);
         default:
             errorMessage = errorMessage || "Server error";
