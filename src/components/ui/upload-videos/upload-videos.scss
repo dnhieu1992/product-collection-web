@@ -1,0 +1,38 @@
+.upload-video-button {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #56aaff;
+    border: 1px solid #56AAFF;
+    width: 170px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    span {
+        margin-left: 10px;
+    }
+}
+
+.video-items {
+    display: flex;
+    align-items: center;
+
+    .video-item {
+        position: relative;
+        margin-left: 10px;
+
+        &--close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 10;
+            background: #cccccc;
+            border: none;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+    }
+}

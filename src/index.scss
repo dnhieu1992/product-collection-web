@@ -1,0 +1,118 @@
+div[themebg-pattern="theme1"] {
+    background-color: #448aff;
+    overflow-x: hidden;
+    color: #455a64;
+    background-attachment: fixed;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2) 177px, rgba(255, 255, 255, 0.9) 18.6%);
+    height: 100vh;
+}
+
+.login-block {
+    margin: 30px auto;
+}
+
+.login-block .auth-box {
+    margin: 20px auto 0 auto;
+    max-width: 450px;
+}
+
+.login-block .auth-box .confirm h3 {
+    color: #448aff;
+    font-size: 34px;
+}
+
+.login-block .auth-box i.icofont-check-circled {
+    font-size: 42px;
+}
+
+.login-block.offline-404 .auth-box {
+    max-width: 650px;
+}
+
+.login-block.offline-404 .auth-box h1 {
+    color: #2c3e50;
+    font-size: 160px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-shadow: 3px -2px 4px rgba(128, 128, 128, 0.57);
+}
+
+.link {
+    font-size: 13px;
+    color: #37474f;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: 500;
+
+    &:hover {
+        text-decoration: none;
+        color: #448aff;
+    }
+}
+
+.text-inverse {
+    font-size: 13px;
+}
+
+.shared-input-container {
+    position: relative;
+    padding: 18px 0 0;
+    margin-bottom: 5px;
+    width: 100%;
+    z-index: 10;
+
+    .input-field {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #9b9b9b;
+        outline: 0;
+        font-size: 16px;
+        color: #57544e;
+        padding: 10px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+
+        &::placeholder {
+            color: transparent;
+        }
+
+        &:placeholder-shown~.label {
+            font-size: 14px;
+            cursor: text;
+            top: 27px;
+        }
+    }
+
+    .label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 14px;
+        color: #57544e;
+        z-index: -1;
+    }
+
+    .input-field:focus {
+        ~.label {
+            position: absolute;
+            top: 5px;
+            display: block;
+            transition: 0.2s;
+            font-size: 11px;
+            color: #448aff;
+        }
+
+        padding-bottom: 6px;
+        border-bottom: 1px solid #448aff;
+        border-width: 2px;
+        border-image-slice: 1;
+    }
+}
+
+.MuiIconButton-root {
+    padding: 5px !important;
+}
