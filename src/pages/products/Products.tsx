@@ -3,9 +3,10 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Grid, Button, IconButton } from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+import { Delete, Edit, Info } from '@material-ui/icons';
 import httpClient from '../../lib/apiRequest';
 import FormDialog from '../../layouts/dialog/Dialog';
+import ModalDetails from '../../layouts/modal/ModalDetails';
 import Moment from 'moment';
 
 const initialValue = {
@@ -32,6 +33,7 @@ function Product() {
     const [gridApi, setGridApi] = useState(null);
     const [tableData, setTableData] = useState(null);
     const [open, setOpen] = React.useState(false);
+    const [openModal, setOpenModal] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
     const imageList = useRef<File[]>()
     const videoList = useRef<File[]>()
@@ -42,22 +44,23 @@ function Product() {
 
     const handleClose = () => {
         setOpen(false);
+        setOpenModal(false);
         setFormData(initialValue)
     };
 
     const columnDefs = [
         { headerName: "STT", field: "", width: 50, maxWidth: 60, resizable: true, cellRenderer: (params: any) => params.rowIndex },
         { headerName: "Tên shop", field: "shopName" },
-        { headerName: "Link sp", field: "link" },
         { headerName: "Ngày", field: "reviewDate", cellRenderer: (params: any) => Moment(params.value).format('DD/MM/YYYY') },
-        { headerName: "Phân loại 1", field: "productType1" },
-        { headerName: "Phân loại 2", field: "productType2" },
-        { headerName: "Giá sp", field: "price" },
-        { headerName: "Nội dung review", field: "reviewContent" },
-        { headerName: "Hình ảnh review", field: "reviewImages" },
-        { headerName: "Mã đặt đơn", field: "orderId" },
-        { headerName: "Mã vận đơn", field: "shippingCode" },
-        { headerName: "Số tiền đơn hàng", field: "totalPrice" },
+        // { headerName: "Link sp", field: "link" },
+        // { headerName: "Phân loại 1", field: "productType1" },
+        // { headerName: "Phân loại 2", field: "productType2" },
+        // { headerName: "Giá sp", field: "price" },
+        // { headerName: "Nội dung review", field: "reviewContent" },
+        // { headerName: "Hình ảnh review", field: "reviewImages" },
+        // { headerName: "Mã đặt đơn", field: "orderId" },
+        // { headerName: "Mã vận đơn", field: "shippingCode" },
+        // { headerName: "Số tiền đơn hàng", field: "totalPrice" },
         { headerName: "Đã nhận", field: "isReceived", cellRenderer: (params: any) => params.data.isReceived == true ? "x" : "" },
         { headerName: "Đã review", field: "isReviewed", cellRenderer: (params: any) => params.data.isReviewed == true ? "x" : "" },
         { headerName: "Lý do không review", field: "reasonNoReview" },
@@ -70,7 +73,10 @@ function Product() {
                 </IconButton>
                 <IconButton>
                     <Delete color="secondary" onClick={() => handleDelete(params.value)} />
-                </IconButton>  
+                </IconButton>
+                <IconButton>
+                    <Info color="primary" onClick={() => handleShowDetail(params.data)}  />
+                </IconButton> 
             </div>
         }
     ];
@@ -106,11 +112,15 @@ function Product() {
     }
 
     const handleUpdate = (oldData: any) => {
-        console.log("oldData", oldData);
 
         setFormData(oldData);
         handleClickOpen();
     };
+
+    const handleShowDetail = (data: any) => {
+        setFormData(data);
+        setOpenModal(true);
+    }
 
     const handleDelete = async (id: string) => {
         const confirm = window.confirm("Are you sure, you want to delete this row");
@@ -261,6 +271,11 @@ function Product() {
                 handleFormSubmit={handleFormSubmit}
                 onImagesChange={onImagesChange}
                 onVideosChange={onVideosChange}
+            />
+            <ModalDetails
+                open={openModal}
+                handleClose={handleClose}
+                data={formData}
             />
         </div>
     )

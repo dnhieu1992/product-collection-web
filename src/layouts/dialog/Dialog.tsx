@@ -6,11 +6,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 import { UploadImages, UploadVideos } from '../../components/ui';
 
+import './dialog.scss';
+
 interface FormDialogProps {
-    open: any,
-    handleClose: any,
-    data: any,
-    onChange: any,
+    open: any
+    handleClose: any
+    data: any
+    onChange: any
     handleFormSubmit: any
     onImagesChange: any
     onVideosChange: any
@@ -45,6 +47,8 @@ export default function FormDialog({
         customer
     } = data;
 
+    const custumdate = reviewDate?.split('.');
+
     return (
         <div>
             <Dialog
@@ -56,20 +60,6 @@ export default function FormDialog({
                 <DialogTitle id="alert-dialog-title">{_id ? "Update product" : "Create new product"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <TextField id="shopName" value={shopName} onChange={e => onChange(e)} placeholder="Nhập tên shop" label="Tên shop" variant="filled" margin="dense" fullWidth />
-                        <TextField id="link" value={link} onChange={e => onChange(e)} placeholder="Nhập link sp" label="link" variant="filled" margin="dense" fullWidth />
-                        <TextField id="reviewDate" value={reviewDate} onChange={e => onChange(e)} placeholder="Nhập ngày" label="Ngày" variant="filled" margin="dense" fullWidth />
-                        <TextField id="productType1" value={productType1} onChange={e => onChange(e)} placeholder="Nhập phân loại 1" label="Phân loại 1" variant="filled" margin="dense" fullWidth />
-                        <TextField id="productType2" value={productType2} onChange={e => onChange(e)} placeholder="Nhập phân loại 2" label="Phân loại 2" variant="filled" margin="dense" fullWidth />
-                        <TextField id="price" value={price} onChange={e => onChange(e)} placeholder="Nhập giá sp" label="Giá" variant="filled" margin="dense" fullWidth />
-                        <TextField id="reviewContent" value={reviewContent} onChange={e => onChange(e)} placeholder="Nhập nội dung review" label="Nội dung review" variant="filled" margin="dense" fullWidth />
-                        <TextField id="reviewImages" value={reviewImages} onChange={e => onChange(e)} placeholder="Nhập hình ảnh review" label="Hình ảnh review" variant="filled" margin="dense" fullWidth />
-                        <TextField id="orderId" value={orderId} onChange={e => onChange(e)} placeholder="Nhập mã đặt đơn" label="Mã đặt đơn" variant="filled" margin="dense" fullWidth />
-                        <TextField id="shippingCode" value={shippingCode} onChange={e => onChange(e)} placeholder="Nhập mã vận đơn" label="Mã vận đơn" variant="filled" margin="dense" fullWidth />
-                        <TextField id="totalPrice" value={totalPrice} onChange={e => onChange(e)} placeholder="Nhập số tiền đơn hàng" label="Số tiền đơn hàng" variant="filled" margin="dense" fullWidth />
-                        <TextField id="reviewer" value={reviewer} onChange={e => onChange(e)} placeholder="Nhập tài khoản" label="Tải khoản" variant="filled" margin="dense" fullWidth />
-                        <TextField id="customer" value={customer} onChange={e => onChange(e)} placeholder="Nhập khách" label="Khách" variant="filled" margin="dense" fullWidth />
-                        <TextField id="reasonNoReview" value={reasonNoReview} onChange={e => onChange(e)} multiline minRows={3} placeholder="Nhập lý do không review" label="Lý do không review" variant="filled" margin="dense" fullWidth />
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -94,7 +84,40 @@ export default function FormDialog({
                             }
                             label="Đã review"
                         />
-                        <div className='form-group'>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <TextField id="shopName" value={shopName} onChange={e => onChange(e)} placeholder="Nhập tên shop" label="Tên shop" margin="dense" fullWidth />
+                                <TextField id="link" value={link} onChange={e => onChange(e)} placeholder="Nhập link sp" label="link" margin="dense" fullWidth />
+                                <TextField
+                                    id="reviewDate"
+                                    type="datetime-local"
+                                    onChange={e => onChange(e)}
+                                    value={custumdate[0]}
+                                    placeholder="Nhập ngày"
+                                    label="Ngày"
+                                
+                                    margin="dense"
+                                    fullWidth
+                                    InputLabelProps={{
+                                        shrink: true
+                                    }}
+                                />
+                                <TextField id="productType1" value={productType1} onChange={e => onChange(e)} placeholder="Nhập phân loại 1" label="Phân loại 1" margin="dense" fullWidth />
+                                <TextField id="productType2" value={productType2} onChange={e => onChange(e)} placeholder="Nhập phân loại 2" label="Phân loại 2" margin="dense" fullWidth />
+                                <TextField id="price" value={price} onChange={e => onChange(e)} placeholder="Nhập giá sp" label="Giá" margin="dense" fullWidth />
+                            </div>
+                            <div className="col-sm-6">
+                                <TextField id="reviewContent" value={reviewContent} onChange={e => onChange(e)} placeholder="Nhập nội dung review" label="Nội dung review" margin="dense" fullWidth />
+                                {/* <TextField id="reviewImages" value={reviewImages} onChange={e => onChange(e)} placeholder="Nhập hình ảnh review" label="Hình ảnh review" margin="dense" fullWidth /> */}
+                                <TextField id="orderId" value={orderId} onChange={e => onChange(e)} placeholder="Nhập mã đặt đơn" label="Mã đặt đơn" margin="dense" fullWidth />
+                                <TextField id="shippingCode" value={shippingCode} onChange={e => onChange(e)} placeholder="Nhập mã vận đơn" label="Mã vận đơn" margin="dense" fullWidth />
+                                <TextField id="totalPrice" value={totalPrice} onChange={e => onChange(e)} placeholder="Nhập số tiền đơn hàng" label="Số tiền đơn hàng" margin="dense" fullWidth />
+                                <TextField id="reviewer" value={reviewer} onChange={e => onChange(e)} placeholder="Nhập tài khoản" label="Tải khoản" margin="dense" fullWidth />
+                                <TextField id="customer" value={customer} onChange={e => onChange(e)} placeholder="Nhập khách" label="Khách" margin="dense" fullWidth />
+                            </div>
+                        </div>                                                                  
+                        <TextField id="reasonNoReview" value={reasonNoReview} onChange={e => onChange(e)} multiline minRows={3} placeholder="Nhập lý do không review" label="Lý do không review" margin="dense" fullWidth />                       
+                        <div className='form-group mt-3'>
                             <div>Upload Images</div>
                             <UploadImages onChange={onImagesChange} />
                         </div>

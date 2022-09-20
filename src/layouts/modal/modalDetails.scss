@@ -1,0 +1,22 @@
+.MuiDialog-paperWidthSm {
+    min-width: 800px;
+}
+
+.product-detail {
+    font-size: 18px;
+
+    &__lable {
+        font-weight: 600;
+        min-height: 150px;
+        padding-right: 30px;
+    }
+
+    &__img {
+        width: 50px;
+        margin-right: 10px;
+    }
+
+    &__video {
+        margin-right: 10px;
+    }
+}
