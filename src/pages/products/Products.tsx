@@ -3,11 +3,13 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Grid, Button, IconButton } from '@material-ui/core';
-import { Delete, Edit, Info } from '@material-ui/icons';
+import { Delete, Edit, Info, CloudDownloadOutlined } from '@material-ui/icons';
 import httpClient from '../../lib/apiRequest';
 import FormDialog from '../../layouts/dialog/Dialog';
 import ModalDetails from '../../layouts/modal/ModalDetails';
 import Moment from 'moment';
+
+import './products.scss';
 
 const initialValue = {
     _id: "",
@@ -75,7 +77,10 @@ function Product() {
                     <Delete color="secondary" onClick={() => handleDelete(params.value)} />
                 </IconButton>
                 <IconButton>
-                    <Info color="primary" onClick={() => handleShowDetail(params.data)}  />
+                    <Info color="primary" onClick={() => handleShowDetail(params.data)} />
+                </IconButton>
+                <IconButton>
+                    <CloudDownloadOutlined color="primary" />
                 </IconButton> 
             </div>
         }
@@ -134,8 +139,6 @@ function Product() {
     };
 
     const handleFormSubmit = async () => {
-        console.log("formData: ", formData);
-
         if (formData._id) {
             const bodyUpdate = {
                 id: formData._id,
@@ -183,8 +186,7 @@ function Product() {
                 customer: formData.customer
             }
 
-
-            const { imageUrls, videoUrls } = await uploadMedia()
+            const { imageUrls, videoUrls } = await uploadMedia();
             const { data } = await httpClient.post("/product/create", { ...bodyCreate, reviewImages: imageUrls, reviewVideos: videoUrls });
 
             if (data && data._id) {
@@ -199,6 +201,7 @@ function Product() {
         let videoUrls = [];
         if (imageList.current) {
             const imagesFormData = new FormData();
+            console.log(imagesFormData)
             for (const file of imageList.current) {
                 imagesFormData.append('files', file);
             }
