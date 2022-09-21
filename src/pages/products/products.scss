@@ -1,0 +1,9 @@
+@media only screen and (max-width: 1200px) {
+    .ag-root-wrapper-body {
+        overflow-x: auto;
+    }
+
+    .ag-root.ag-layout-normal {
+        min-width: 1500px;
+    }
+}

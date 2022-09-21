@@ -116,3 +116,9 @@ div[themebg-pattern="theme1"] {
 .MuiIconButton-root {
     padding: 5px !important;
 }
+
+@media only screen and (max-width: 750px) {
+    .MuiDialog-paperWidthSm {
+        min-width: auto !important;
+    }
+}
