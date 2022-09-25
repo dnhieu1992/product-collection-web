@@ -43,7 +43,7 @@ function Product() {
     const [formData, setFormData] = useState(initialValue);
     const imageList = useRef<File[]>()
     const videoList = useRef<File[]>()
-    const user = useContext(AppContext)
+    const user = useContext(AppContext) as unknown as { id: string, username: string, email: string, roles: string[] }
     console.log("user", user)
 
     const handleClickOpen = () => {
@@ -123,10 +123,10 @@ function Product() {
     }, []);
 
     const getUsers = async () => {
-        const { data } = await httpClient.get("/product/getAll");
+        const { data } = await httpClient.get("/product/search");
 
-        if (data.length > 0) {
-            setTableData(data)
+        if (data) {
+            setTableData(data.products)
         }
     }
 
@@ -171,7 +171,8 @@ function Product() {
                 isReviewed: formData.isReviewed,
                 reasonNoReview: formData.reasonNoReview,
                 reviewer: formData.reviewer,
-                customer: formData.customer
+                customer: formData.customer,
+                updatedBy: user.id
             }
 
             const { data } = await httpClient.put("/product/update", bodyUpdate);
@@ -197,7 +198,9 @@ function Product() {
                 isReviewed: formData.isReviewed,
                 reasonNoReview: formData.reasonNoReview,
                 reviewer: formData.reviewer,
-                customer: formData.customer
+                customer: formData.customer,
+                updatedBy: user.id,
+                createdBy: user.id
             }
 
             const { imageUrls, videoUrls } = await uploadMedia();
@@ -245,7 +248,7 @@ function Product() {
 
     return (
         <>
-            <Header  />
+            <Header />
             <div className="product">
                 <h3 style={{
                     display: 'block',
