@@ -3,6 +3,7 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import './upload-images.scss';
 import UploadIcon from '../../../assets/images/uploadIcon.svg';
+import { Typography } from '@material-ui/core';
 
 export interface UploadImagesProps {
     className?: string
@@ -25,7 +26,7 @@ const UploadImages = ({ className, onChange }: UploadImagesProps) => {
         }
     };
     return (
-        <div className="upload-images ">
+        <div className="upload-images">
             <ImageUploading
                 multiple
                 value={images}
@@ -35,16 +36,15 @@ const UploadImages = ({ className, onChange }: UploadImagesProps) => {
                 {({
                     imageList,
                     onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
                     onImageRemove,
-                    isDragging,
-                    dragProps
                 }) => (
-                    <div className="upload__image-wrapper">
-                        <div onClick={onImageUpload} className="upload-button">
-                            <img src={UploadIcon} width="20" height="20" />
-                            <span>Click to upload</span>
+                    <>
+                        <div className='upload-form-control'>
+                            <Typography>Upload Images: </Typography>
+                            <div onClick={onImageUpload} className="upload-button">
+                                <img src={UploadIcon} width="20" height="20" />
+                                <span>Click to upload</span>
+                            </div>
                         </div>
                         <div className='images-preview'>
                             {imageList.map((image, index) => (
@@ -55,7 +55,7 @@ const UploadImages = ({ className, onChange }: UploadImagesProps) => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </>
                 )}
             </ImageUploading>
         </div>

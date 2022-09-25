@@ -35,27 +35,28 @@ export default function ModalDetails({
         isReviewed,
         reasonNoReview,
         reviewer,
-        customer
-    } = data;  
+        customer,
+        keyWord
+    } = data;
 
     const handleShowImg = () => {
         if (reviewImages?.length > 0) {
             return reviewImages?.map((item: any) => <img className="product-detail__img" src={item}></img>);
-        }        
+        }
     };
 
     const handleShowVideo = () => {
         console.log(reviewVideos)
         if (reviewVideos?.length > 0) {
-            return reviewVideos?.map((item: any) => 
+            return reviewVideos?.map((item: any) =>
                 <video className="product-detail__video" width="120" controls>
                     <source src={item} type="video/mp4"></source>
                 </video>
             );
-        } 
+        }
     };
 
-    return(
+    return (
         <div>
             <Dialog
                 open={open}
@@ -68,75 +69,79 @@ export default function ModalDetails({
                     <table>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Tên Shop</td>
-                            <td className="product-detail__text">{shopName}</td>                            
+                            <td className="product-detail__text">{shopName}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Ngày</td>
-                            <td className="product-detail__text">{Moment(reviewDate).format('DD/MM/YYYY')}</td>                       
+                            <td className="product-detail__text">{Moment(reviewDate).format('DD/MM/YYYY')}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Link SP</td>
-                            <td className="product-detail__text">{link}</td>                       
+                            <td className="product-detail__text">{link}</td>
+                        </tr>
+                        <tr className="product-detail">
+                            <td className="product-detail__lable">Keyword</td>
+                            <td className="product-detail__text">{keyWord}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Phân loại 1</td>
-                            <td className="product-detail__text">{productType1}</td>                       
+                            <td className="product-detail__text">{productType1}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Phân loại 2</td>
-                            <td className="product-detail__text">{productType2}</td>                       
+                            <td className="product-detail__text">{productType2}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Giá SP</td>
-                            <td className="product-detail__text">{price}</td>                       
+                            <td className="product-detail__text">{price}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Nội dung review</td>
-                            <td className="product-detail__text">{reviewContent}</td>                       
+                            <td className="product-detail__text">{reviewContent}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Hình ảnh review</td>
                             <td className="product-detail__text">
                                 {handleShowImg()}
-                            </td>                       
+                            </td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Video review</td>
                             <td className="product-detail__text">
                                 {handleShowVideo()}
-                            </td>                       
+                            </td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Mã đặt đơn</td>
-                            <td className="product-detail__text">{orderId}</td>                       
+                            <td className="product-detail__text">{orderId}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Mã vận đơn</td>
-                            <td className="product-detail__text">{shippingCode}</td>                       
+                            <td className="product-detail__text">{shippingCode}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Đã nhận</td>
-                            <td className="product-detail__text">{isReceived ? "Yes" : "No"}</td>                       
+                            <td className="product-detail__text">{isReceived ? "Yes" : "No"}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Đã review</td>
-                            <td className="product-detail__text">{isReviewed ? "Yes" : "No"}</td>                       
+                            <td className="product-detail__text">{isReviewed ? "Yes" : "No"}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Số tiền đơn hàng</td>
-                            <td>{totalPrice}</td>                       
+                            <td>{totalPrice}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Lý do không review</td>
-                            <td className="product-detail__text">{reasonNoReview}</td>                       
+                            <td className="product-detail__text">{reasonNoReview}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Tài khoản</td>
-                            <td className="product-detail__text">{reviewer}</td>                       
+                            <td className="product-detail__text">{reviewer}</td>
                         </tr>
                         <tr className="product-detail">
                             <td className="product-detail__lable">Khách</td>
-                            <td className="product-detail__text">{customer}</td>                       
+                            <td className="product-detail__text">{customer}</td>
                         </tr>
                     </table>
                 </DialogContent>

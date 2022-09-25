@@ -12,7 +12,9 @@ function storeUser(user: User) {
 function getCurrentUser() {
     const user = localStorage.getItem('User');
     if (user) {
-        return JSON.parse(user);
+        const userObject = JSON.parse(user);
+        const isCustomer = !userObject.roles.includes("staff") && !userObject.roles.includes("manager")
+        return { ...userObject, isCustomer };
     }
     return {}
 }

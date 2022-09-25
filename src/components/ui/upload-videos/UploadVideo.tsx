@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import UploadIcon from '../../../assets/images/uploadIcon.svg';
 import './upload-videos.scss';
@@ -57,19 +58,22 @@ const UploadVideos = ({
                 hidden
                 multiple
             />
-            <div onClick={onVideoUpload} className="upload-video-button">
-                <img src={UploadIcon} width="20" height="20" />
-                <span>Click to upload</span>
+            <div className="upload-video-control">
+                <Typography>Upload Videos</Typography>
+                <div onClick={onVideoUpload} className='upload-video-button'>
+                    <img src={UploadIcon} width="20" height="20" />
+                    <span>Click to upload</span>
+                </div>
             </div>
             {sources && sources?.length > 0 && (
                 <div className='video-items'>
                     {sources.map((source) => (
-                        <div key={source} className="video-item" style={{ width: `${width}px`, height: `${height}px` }}>
+                        <div key={source} className="video-item">
                             <video
                                 controls
-                                height="100%"
+                                height={height}
                                 src={source}
-                                width="100%"
+                                width={width}
                             />
                             <button className='video-item--close' onClick={() => onRemove(source)}>X</button>
                         </div>

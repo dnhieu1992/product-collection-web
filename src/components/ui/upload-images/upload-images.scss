@@ -1,14 +1,20 @@
 .upload-images {
-    .upload-button {
-        margin: 5px;
-        display: flex;
+    .upload-form-control {
         align-items: center;
-        justify-content: center;
-        color: #56aaff;
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .upload-button {
+        align-items: center;
         border: 1px solid #56AAFF;
-        width: 170px;
-        padding: 5px 10px;
+        color: #56aaff;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        margin-left: 10px;
+        padding: 5px 10px;
+        width: 170px;
 
         span {
             margin-left: 10px;
@@ -16,18 +22,18 @@
     }
 
     .images-preview {
-        display: flex;
-        justify-content: left;
         align-items: center;
+        display: flex;
+        flex-wrap: wrap;
         padding: 10px 0;
-        margin-left: 10px;
     }
 
     .image-item {
-        position: relative;
-        width: 100px;
         height: 100px;
         margin-left: 10px;
+        padding: 5px 0;
+        position: relative;
+        width: 100px;
 
         img {
             width: 100%;
@@ -35,16 +41,17 @@
         }
 
         &--close {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            z-index: 10;
             background: #cccccc;
-            border: none;
-            font-size: 0.75rem;
             border-radius: 50%;
+            border: none;
             color: #FFFFFF;
+            font-size: 0.75rem;
             font-weight: 600;
+            padding: 2px 4px;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 10;
         }
     }
 }

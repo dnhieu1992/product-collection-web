@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -8,8 +8,12 @@ import httpClient from '../../lib/apiRequest';
 import FormDialog from '../../layouts/dialog/Dialog';
 import ModalDetails from '../../layouts/modal/ModalDetails';
 import Moment from 'moment';
+import { AppContext } from '../../index';
+import fileDownload from 'js-file-download'
+import Header from '../../layouts/header';
 
 import './products.scss';
+import axios from 'axios';
 
 const initialValue = {
     _id: "",
@@ -39,6 +43,8 @@ function Product() {
     const [formData, setFormData] = useState(initialValue);
     const imageList = useRef<File[]>()
     const videoList = useRef<File[]>()
+    const user = useContext(AppContext)
+    console.log("user", user)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -54,15 +60,6 @@ function Product() {
         { headerName: "STT", field: "", width: 50, maxWidth: 60, resizable: true, cellRenderer: (params: any) => params.rowIndex },
         { headerName: "Tên shop", field: "shopName" },
         { headerName: "Ngày", field: "reviewDate", cellRenderer: (params: any) => Moment(params.value).format('DD/MM/YYYY') },
-        // { headerName: "Link sp", field: "link" },
-        // { headerName: "Phân loại 1", field: "productType1" },
-        // { headerName: "Phân loại 2", field: "productType2" },
-        // { headerName: "Giá sp", field: "price" },
-        // { headerName: "Nội dung review", field: "reviewContent" },
-        // { headerName: "Hình ảnh review", field: "reviewImages" },
-        // { headerName: "Mã đặt đơn", field: "orderId" },
-        // { headerName: "Mã vận đơn", field: "shippingCode" },
-        // { headerName: "Số tiền đơn hàng", field: "totalPrice" },
         { headerName: "Đã nhận", field: "isReceived", cellRenderer: (params: any) => params.data.isReceived == true ? "x" : "" },
         { headerName: "Đã review", field: "isReviewed", cellRenderer: (params: any) => params.data.isReviewed == true ? "x" : "" },
         { headerName: "Lý do không review", field: "reasonNoReview" },
@@ -80,8 +77,8 @@ function Product() {
                     <Info color="primary" onClick={() => handleShowDetail(params.data)} />
                 </IconButton>
                 <IconButton>
-                    <CloudDownloadOutlined color="primary" />
-                </IconButton> 
+                    <CloudDownloadOutlined color="primary" onClick={() => handleDownload([...params?.data?.reviewImages, ...params?.data?.reviewVideos])} />
+                </IconButton>
             </div>
         }
     ];
@@ -95,6 +92,23 @@ function Product() {
         autoHeight: true
     }
 
+    const handleDownload = (urls: string[]) => {
+        if (!urls || urls.length <= 0) {
+            return
+        }
+        for (const url of urls) {
+            const fileName = url?.split('/')?.at(-1)
+            if (!fileName) {
+                break
+            }
+            axios.get(url, {
+                responseType: 'blob',
+            })
+                .then((res: any) => {
+                    fileDownload(res.data, fileName)
+                })
+        }
+    }
     const onGridReady = (params: any) => {
         setGridApi(params)
     }
@@ -221,16 +235,6 @@ function Product() {
         return { imageUrls, videoUrls }
     }
 
-    const handleSearch = async (text: string) => {
-        if (text) {
-            const { data } = await httpClient.get(`/product/search?shopName=${text}&pageNumber=1&pageSize=50&sortDirection=asc&sortField=name`);
-
-            setTableData(data.products);
-        } else {
-            getUsers();
-        }
-    };
-
     const onImagesChange = (files: File[]) => {
         imageList.current = files
     }
@@ -240,47 +244,46 @@ function Product() {
     }
 
     return (
-        <div className="product">
-            <h3 style={{
-                display: 'block',
-                padding: '1rem'
-            }}>Products</h3>
-            <hr />
-            <Grid container justifyContent="flex-end" style={{
-                padding: '0.75rem',
-            }}>
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>Add product</Button>
-            </Grid>
-            {/* <input
-                type="search"
-                placeholder="Search something..."
-                onChange={(e) => handleSearch(e.target.value)}
-                style={{ padding: 10, fontSize: "105%", width: "100%", outline: 0 }} 
-            /> */}
-            <div className="ag-theme-alpine" style={{ padding: '0.75rem', height: '450px' }}>
-                <AgGridReact
-                    rowData={tableData}
-                    columnDefs={columnDefs}
-                    defaultColDef={defaultColDef}
-                    onGridReady={onGridReady}
-                    pagination={true}
+        <>
+            <Header  />
+            <div className="product">
+                <h3 style={{
+                    display: 'block',
+                    padding: '1rem'
+                }}>Products</h3>
+                <hr />
+                <Grid container justifyContent="flex-end" style={{
+                    padding: '0.75rem',
+                }}>
+                    <Button variant="contained" color="primary" onClick={handleClickOpen}>Add product</Button>
+                </Grid>
+                <div className="ag-theme-alpine" style={{ padding: '0.75rem', height: '450px' }}>
+                    <AgGridReact
+                        rowData={tableData}
+                        columnDefs={columnDefs}
+                        defaultColDef={defaultColDef}
+                        onGridReady={onGridReady}
+                        pagination={true}
+                    />
+                </div>
+                <FormDialog
+                    open={open}
+                    user={user}
+                    handleClose={handleClose}
+                    data={formData}
+                    onChange={onChange}
+                    handleFormSubmit={handleFormSubmit}
+                    onImagesChange={onImagesChange}
+                    onVideosChange={onVideosChange}
+
+                />
+                <ModalDetails
+                    open={openModal}
+                    handleClose={handleClose}
+                    data={formData}
                 />
             </div>
-            <FormDialog
-                open={open}
-                handleClose={handleClose}
-                data={formData}
-                onChange={onChange}
-                handleFormSubmit={handleFormSubmit}
-                onImagesChange={onImagesChange}
-                onVideosChange={onVideosChange}
-            />
-            <ModalDetails
-                open={openModal}
-                handleClose={handleClose}
-                data={formData}
-            />
-        </div>
+        </>
     )
 }
 
