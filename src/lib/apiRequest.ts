@@ -2,8 +2,8 @@ import axios from 'axios';
 import userService from '../ultils/userService';
 
 const httpClient = axios.create({
-   // baseURL: 'https://product-collection-api.herokuapp.com/api',
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://product-collection-api.herokuapp.com/api',
+   // baseURL: 'http://localhost:5000/api',
     headers: {
         "Content-Type": "application/json",
     }
