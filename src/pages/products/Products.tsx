@@ -218,7 +218,6 @@ function Product() {
         let videoUrls = [];
         if (imageList.current) {
             const imagesFormData = new FormData();
-            console.log(imagesFormData)
             for (const file of imageList.current) {
                 imagesFormData.append('files', file);
             }
@@ -267,6 +266,7 @@ function Product() {
                         defaultColDef={defaultColDef}
                         onGridReady={onGridReady}
                         pagination={true}
+                        paginationPageSize={10}
                     />
                 </div>
                 <FormDialog
