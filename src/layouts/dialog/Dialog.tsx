@@ -50,7 +50,7 @@ export default function FormDialog({
         keyWord
     } = data;
 
-    const custumdate = reviewDate?.split('.');
+    const custumdate = reviewDate == null ? "" : reviewDate?.split('.');
 
     return (
         <div>
@@ -107,8 +107,7 @@ export default function FormDialog({
                                     onChange={e => onChange(e)}
                                     value={custumdate[0]}
                                     placeholder="Nhập ngày"
-                                    label="Ngày"
-
+                                    label="Ngày"                                    
                                     margin="dense"
                                     fullWidth
                                     InputLabelProps={{
